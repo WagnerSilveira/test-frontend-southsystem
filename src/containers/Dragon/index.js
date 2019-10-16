@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Actions as DragonActions } from '../../store/ducks/dragons';
-import { successNotification, errorNotification } from '../../helpers/notification';
 import Form, {FormContainer} from '../../components/Form';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -30,7 +29,15 @@ const dragonTypeInput = (value="", change) => ({
 })
 
 
-const Dragon = (props) => {
+const Dragon = ({ 
+    match,
+    dragons,
+    getDragon,
+    addDragon,
+    updateDragon,
+    deleteDragon
+}) => {
+    
     const history = useHistory();
     const [isEditionMode, setEditionMode] = useState(false);
     const [name, setName] = useState("");
@@ -40,26 +47,32 @@ const Dragon = (props) => {
             setter(e.target.value)
         }
     }
+    const dragonId = match.params.id;
     useEffect(() => { 
-        if(props.match.params 
-            && props.match.params.id
-            && !isEditionMode ) {
-            props.getDragon(props.match.params.id)
+        if (match.params && dragonId && !isEditionMode) {
+            getDragon(dragonId)
             setEditionMode(true)
         }  
         if (isEditionMode) {
-            setName(props.dragons.detail.name);
-            setType(props.dragons.detail.type);
+            setName(dragons.detail.name);
+            setType(dragons.detail.type);
         }
-    },[props.dragons.detail])
+    },[dragons.detail])
 
     useEffect(()=> {
-        if(props.dragons.deleted) {
-            successNotification(`Dragão ${name} removido!`);
+        if(dragons.deleted) {
+            //successNotification();
             history.push('/');
         }
-    }, [props.dragons.deleted])
-    
+    }, [dragons.deleted])
+
+    const saveDragon = () => {
+        if (dragonId) {
+            updateDragon(dragonId, name, type);
+        } else {
+            addDragon(name, type);
+        }
+    }
     return (
           <>
             <Header/>
@@ -68,15 +81,15 @@ const Dragon = (props) => {
                     <BackLink onClick={()=> { history.push('/')}}>&lt;- Voltar</BackLink>
                     <PageTitle>
                         { isEditionMode 
-                        ? `Editando Dragão ID: ${props.dragons.detail.id}` 
+                        ? `Editando Dragão ID: ${dragonId}` 
                         : 'Criar novo Dragão' }
                     </PageTitle>
                     <Input {...dragonNameInput(name, genericSetter(setName))}/>
                     <Input {...dragonTypeInput(type, genericSetter(setType))}/>
-                    <Button> { isEditionMode ? 'Editar' : 'Criar' } </Button>
+                    <Button onClick={saveDragon}> { isEditionMode ? 'Editar' : 'Criar' } </Button>
                     {isEditionMode?  
                         <Button danger onClick={() => { 
-                                props.deleteDragon(props.dragons.detail.id);}}>
+                                deleteDragon(dragonId);}}>
                             Remover 
                         </Button> : ''}
                 </Form>
@@ -90,5 +103,7 @@ const mapStateToProps = ({ dragons }) => ({ dragons });
 const mapDispatchToProps = (dispatch) => ({
   getDragon: (id) => dispatch(DragonActions.getDragon(id)),
   deleteDragon: (id) => dispatch(DragonActions.deleteDragon(id)),
+  addDragon: (name, type) => dispatch(DragonActions.addDragon(name, type)),
+  updateDragon: (id, name, type) => dispatch(DragonActions.updateDragon(id, name, type)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Dragon)

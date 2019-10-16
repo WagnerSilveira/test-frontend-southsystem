@@ -1,5 +1,8 @@
 import axios from 'axios';
-
+import { 
+  successNotification, 
+  errorNotification
+} from '../../helpers/notification';
 /** Types */
 export const Types = {
     GET_ALL: "@dragons/GET_ALL",
@@ -33,27 +36,54 @@ export const Actions = {
       dispatch({ type: Types.LOADING });
       axios.get(`${baseURL}/dragon/${id}`)
         .then(function (response) {
-          console.log('response.data ',response.data )
           dispatch({ type: Types.GET, value: response.data });
         })
       .catch(function (error) {
-        console.error(error)
+        errorNotification(`Ops!! Não foi possível buscar este Dragão!`);
         dispatch({ type: Types.ERROR});
       });
     }
   },
-
+  addDragon: (name, type) => {
+    const payload = { name, type };
+    return (dispatch) => {
+      dispatch({ type: Types.LOADING });
+      axios.post(`${baseURL}/dragon`, payload)
+      .then((response) => {
+        successNotification('Dragão inserido com sucesso !')
+      })
+      .catch(()  => {
+        errorNotification(`Ops!! Não foi possível inserir!`);
+        dispatch({ type: Types.ERROR });
+      });
+    }
+  },
+  updateDragon: (id, name, type) => {
+    const payload = { name, type };
+    return (dispatch) => {
+      dispatch({ type: Types.LOADING });
+      axios.put(`${baseURL}/dragon/${id}`, payload)
+      .then((response) => {
+        successNotification('Dragão atualizado !')
+      })
+      .catch(()  => {
+        errorNotification(`Ops!! Não foi possível buscar este Dragão!`);
+        dispatch({ type: Types.ERROR });
+      });
+    }
+  },
 
   deleteDragon: (id) => {
     return (dispatch) => {
       dispatch({ type: Types.LOADING });
       axios.delete(`${baseURL}/dragon/${id}`)
         .then(function () {
+          successNotification(`Dragão removido!`);
           dispatch({ type: Types.DELETE });
         })
       .catch(function (error) {
-        console.error(error)
-        dispatch({ type: Types.ERROR});
+        errorNotification(`Ops!! Não foi possível remover!`);
+        dispatch({ type: Types.DELETE_ERROR});
       });
     }
   }
