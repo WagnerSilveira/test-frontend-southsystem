@@ -1,0 +1,50 @@
+{
+  "name": "southsystem-test-frontend",
+  "version": "1.0.0",
+  "description": "Frontend in ReactJS for SouthSystem ",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --inline --hot --env.NODE_ENV=development",
+    "test": "react-scripts test --watchAll --verbose",
+    "coverage": "react-scripts test --watchAll --coverage"
+  },
+  "keywords": [
+    "southsystem",
+    "frontend",
+    "reactjs"
+  ],
+  "author": "Wagner Silveira <wagnerhsilveira@gmail.com>",
+  "license": "None",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "dotenv": "^8.1.0",
+    "dotenv-webpack": "^1.7.0",
+    "history": "^4.10.1",
+    "normalize.css": "^8.0.1",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
+    "react-redux": "^7.0.2",
+    "react-router-dom": "^5.0.0",
+    "react-scripts": "3.0.1",
+    "react-toastify": "^5.4.0",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0",
+    "style-loader": "^1.0.0",
+    "styled-components": "^4.2.0",
+    "styled-reset": "^4.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-react": "^7.6.3",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.6",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^3.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "webpack": "^4.41.1",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.2"
+  }
+}
