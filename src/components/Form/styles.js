@@ -8,3 +8,11 @@ export const FormStyle =  styled.form`
     align-items: center;
     flex-direction: column;
 `
+export const Container = styled.div`
+    position: absolute;
+    display: flex;
+    width: fill-available;
+    margin: 20px;
+    height: 80%;
+    justify-content: center;
+`;

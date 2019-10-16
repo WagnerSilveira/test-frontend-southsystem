@@ -1,13 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Container, ButtonStyle } from './styles';
+import { 
+  Container, 
+  ButtonStyle as ButtonDefault, 
+  ButtonDanger
+} from './styles';
 
-const Button = ({ children, ...props }) => (
-  <Container>
-    <ButtonStyle {...props}>{children}</ButtonStyle>
-  </Container>
-);
+const Button = ({ children, ...props }) => {
+  let ButtonType = ButtonDefault;
+  if(props.danger) {
+    ButtonType = ButtonDanger;
+  }
+  return (
+      <Container>
+        <ButtonType {...props}>{children}</ButtonType>
+      </Container>
+    )
+};
 
 Button.defaultProps = {
     type: 'submit',
@@ -15,8 +25,7 @@ Button.defaultProps = {
 Button.propTypes = {
   type: PropTypes.string,
   children: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.element
+      PropTypes.any
     ]).isRequired,
 };
 

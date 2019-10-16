@@ -1,15 +1,23 @@
 const Dotenv = require('dotenv-webpack');
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = (env) => {
     return {
         entry: './src/index.js',
         output: {
-        filename: './public/bundle.js',
+            publicPath: '/',
+            filename: './public/bundle.js',
+            chunkFilename: '[name][chunkhash].js',
+            path: path.join(__dirname, 'src'),
         },
         devServer: {
             historyApiFallback: true,
         },
+        resolve: {
+            modules: [path.resolve(__dirname, './src'), 'node_modules'],
+        },
         module: {
+           
             rules: [
                 {
                     test: /\.(js|jsx)$/,
@@ -17,12 +25,15 @@ module.exports = (env) => {
                     use: {
                         loader: "babel-loader"
                     }
-            
                 },
                 {   
                     test: /\.css$/i,
                     use: ['style-loader', 'css-loader'],
-                }
+                },
+                {
+                    test: /\.(png|jpe?g|gif)$/i,
+                    use: ['file-loader'],
+                },
             ]
         },
         plugins: [

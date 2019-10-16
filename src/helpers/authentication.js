@@ -6,7 +6,6 @@ import {
 
 export const isAuthenticated = () => {
     const token = getItem('token');
-    console.log('token', token)
     if (token) {
         return true;
     }
@@ -25,8 +24,8 @@ export const getUser = () => {
     return getItem('user');
 }
 
-
-export const removeToken = () => {
+export const logout = () => {
+    removeItem('user');
     removeItem('token');
     return true;
 }

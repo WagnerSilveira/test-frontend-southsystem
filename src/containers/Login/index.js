@@ -6,8 +6,8 @@ import { Container, Logo } from './styles';
 import Form from '../../components/Form';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
-import { toast } from 'react-toastify';
 
+import { successNotification, errorNotification } from '../../helpers/notification';
 import { isAuthenticated } from '../../helpers/authentication';
 
 const Login = (props) => {
@@ -25,12 +25,12 @@ const Login = (props) => {
         if(isAuthenticated()){
             history.push('/')
             if(isLoginRequest) {
-                toast("Usuário logado com sucesso", { type: 'success' })
+                successNotification("Usuário logado com sucesso")
                 setLoginReq(false)
             }
         }
         if (isLoginRequest && props.user.error) {
-            toast("Usuário ou senha inválidos", { type: 'error' })
+            errorNotification("Usuário ou senha inválidos")
             setLoginReq(false)
         }
     })

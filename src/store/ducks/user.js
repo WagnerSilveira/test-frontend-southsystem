@@ -1,4 +1,4 @@
-import { storeToken, storeUser } from '../../helpers/authentication';
+import { storeToken, storeUser, logout, getUser } from '../../helpers/authentication';
 
 /** Types */
 export const Types = {
@@ -16,24 +16,32 @@ export const Actions = {
         dispatch({ type: Types.DO_LOGIN })
         if((inputUser ==  process.env.USER) && 
            (inputPass ==  process.env.PASS)) {
-             console.log("login ok")
           storeToken(process.env.PASS)
           storeUser(process.env.USER);
           dispatch({ type: Types.LOGIN_SUCCESS, name: inputUser });
         }else {
-          console.log("login error")
           dispatch({ type: Types.LOGIN_ERROR });
         }        
       }
-   
+  },
+
+  logout: () => {
+    return dispatch => {
+      logout();
+      dispatch({ type: Types.DO_LOGOUT})
+    }
   }
+
+
+
+  
 }
 
 
 /** Reducer */
 
 export const INITIAL_STATE = {
-  name: "",
+  name: getUser() || "",
   isLoading: false,
   error: false
 };
@@ -53,6 +61,14 @@ export default function user(state = INITIAL_STATE, action){
           ...state,
           loading: false,
           error: true
+        }; 
+      case Types.DO_LOGOUT:
+        return { 
+          ...state,
+          loading: false,
+          error: false,
+          name: "",
+
         };  
     default:
       return state;

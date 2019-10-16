@@ -18,8 +18,8 @@ const Routes = () => (
   <Switch>
     <Suspense fallback={<div> Carregando...</div>}>
      <PrivateRoute exact path="/" component={getViewLazy('Home')} />
-       {/*   <PrivateRoute exact path="/dragon/:id" component={getViewLazy('Dragon')} />
-      <PrivateRoute exact path="/new" component={getViewLazy('Dragon')} />*/}
+      <PrivateRoute exact path="/dragon/:id" component={getViewLazy('Dragon')} />
+      <PrivateRoute exact path="/new" component={getViewLazy('Dragon')} />
       <Route exact path="/login" component={getViewLazy('Login')} /> 
     </Suspense>
   </Switch>
