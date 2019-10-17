@@ -8,7 +8,7 @@
     "build": "webpack-cli --env.NODE_ENV=production",
     "test": "react-scripts test --watchAll --verbose",
     "lint": "eslint ./src",
-    "surge": "surge ./public wagner-test-frontend-soulthsystem.surge.sh",
+    "build_deploy": "npm run build && surge ./public wagner-test-frontend-soulthsystem.surge.sh",
     "coverage": "react-scripts test --watchAll --coverage"
   },
   "keywords": [
@@ -46,6 +46,7 @@
     "babel-loader": "^8.0.6",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.2.0",
     "eslint": "^6.5.1",
     "eslint-config-airbnb": "^18.0.1",
