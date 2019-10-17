@@ -11,7 +11,7 @@ import {
   GridItemPicture,
 } from './styles';
 
-const DragonList = ({ list, loading }) => {
+const DragonList = ({ list }) => {
   const history = useHistory();
 
   return (
@@ -37,13 +37,10 @@ const DragonList = ({ list, loading }) => {
 
 DragonList.defaultProps = {
   list: [],
-  loading: false,
 };
 
 DragonList.propTypes = {
   list: PropTypes.array,
-  loading: PropTypes.bool,
-
 };
 
 export default DragonList;
