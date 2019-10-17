@@ -29,6 +29,15 @@ const dragonTypeInput = (value = '', change) => ({
   value,
   onChange: change,
 });
+const dragonCreationDateInput = (value = '') => ({
+  label: 'Data de criação',
+  name: 'dragon-created-at',
+  autoComplete: 'off',
+  id: 'dragon-createt-at-input',
+  type: 'text',
+  value: new Date(value).toLocaleString('pt-BR'),
+  disabled: 'true',
+});
 
 
 const Dragon = ({
@@ -46,6 +55,7 @@ const Dragon = ({
   const [isEditionMode, setEditionMode] = useState(false);
   const [name, setName] = useState('');
   const [type, setType] = useState('');
+  const [creationDate, setCreationDate] = useState('');
   const genericSetter = (setter) => (e) => {
     setter(e.target.value);
   };
@@ -58,6 +68,7 @@ const Dragon = ({
     if (isEditionMode) {
       setName(dragon.name);
       setType(dragon.type);
+      setCreationDate(dragon.createdAt);
     }
   }, [dragon]);
 
@@ -82,6 +93,7 @@ const Dragon = ({
           </PageTitle>
           <Input {...dragonNameInput(name, genericSetter(setName))} />
           <Input {...dragonTypeInput(type, genericSetter(setType))} />
+          { isEditionMode ? <Input {...dragonCreationDateInput(creationDate)} /> : '' }
           <Button onClick={saveDragon} disabled={isLoading}>
             {' '}
             { isEditionMode ? 'Editar' : 'Criar' }
@@ -121,6 +133,7 @@ Dragon.propTypes = {
     detail: PropTypes.object,
     deleted: PropTypes.bool,
     isLoading: PropTypes.bool,
+    createdAt: PropTypes.string,
   }),
   getDragon: PropTypes.func.isRequired,
   addDragon: PropTypes.func.isRequired,
