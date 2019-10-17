@@ -7,7 +7,7 @@ module.exports = (env) => ({
   entry: './src/index.js',
   output: {
     publicPath: '/',
-    filename: './public/bundle.js',
+    filename: './bundle.js',
     chunkFilename: '[name][chunkhash].js',
     path: path.join(__dirname, 'public'),
   },
