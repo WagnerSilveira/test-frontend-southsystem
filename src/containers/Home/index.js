@@ -3,6 +3,7 @@ import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
 import { Actions as DragonActions } from '../../store/ducks/dragons';
 import Header from '../Header';
+import { Title, TitleContainer, ButtonNew } from './styles';
 import DragonList from '../../components/DragonList';
 
 
@@ -13,6 +14,12 @@ import DragonList from '../../components/DragonList';
     return (
           <>
             <Header/>
+            <TitleContainer>
+                <Title> Lista de Dragões </Title>
+                <ButtonNew onClick={()=> props.history.push('/new')}>
+                   Novo
+                </ButtonNew>
+            </TitleContainer>
             <DragonList list={props.dragons.list} />
           </>  
       )

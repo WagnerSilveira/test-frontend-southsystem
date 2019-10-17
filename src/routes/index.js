@@ -2,8 +2,6 @@ import React, { lazy, Suspense } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { isAuthenticated } from '../helpers/authentication';
 
-
-
 const getViewLazy = view => lazy(() => import('../containers/' + view));
 
 const PrivateRoute = ({ component: Component, ...params }) => (

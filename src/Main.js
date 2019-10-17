@@ -9,19 +9,14 @@ import Routes from './routes';
 import Store from "./store";
 import Theme from "./styles/theme";
 import { GlobalStyle } from './styles/global';
-
-
-import { createBrowserHistory } from 'history';
-const history = createBrowserHistory();
-
-
+import history from "./helpers/history";
 const Main = () => {
     return (
       <Provider store={Store}>
           <ThemeProvider theme={Theme}>
             <GlobalStyle/>
             <Router history={history}>
-                  <Routes />
+              <Routes />
             </Router>
             <ToastContainer/>
           </ThemeProvider>

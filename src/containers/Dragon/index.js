@@ -61,7 +61,6 @@ const Dragon = ({
 
     useEffect(()=> {
         if(dragons.deleted) {
-            //successNotification();
             history.push('/');
         }
     }, [dragons.deleted])

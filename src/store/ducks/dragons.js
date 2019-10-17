@@ -1,4 +1,5 @@
 import axios from 'axios';
+import history from "../../helpers/history";
 import { 
   successNotification, 
   errorNotification
@@ -38,7 +39,7 @@ export const Actions = {
         .then(function (response) {
           dispatch({ type: Types.GET, value: response.data });
         })
-      .catch(function (error) {
+      .catch(function () {
         errorNotification(`Ops!! Não foi possível buscar este Dragão!`);
         dispatch({ type: Types.ERROR});
       });
@@ -49,8 +50,9 @@ export const Actions = {
     return (dispatch) => {
       dispatch({ type: Types.LOADING });
       axios.post(`${baseURL}/dragon`, payload)
-      .then((response) => {
+      .then(() => {
         successNotification('Dragão inserido com sucesso !')
+        history.push('/');
       })
       .catch(()  => {
         errorNotification(`Ops!! Não foi possível inserir!`);
@@ -63,8 +65,8 @@ export const Actions = {
     return (dispatch) => {
       dispatch({ type: Types.LOADING });
       axios.put(`${baseURL}/dragon/${id}`, payload)
-      .then((response) => {
-        successNotification('Dragão atualizado !')
+      .then(() => {
+        successNotification('Dragão atualizado !');
       })
       .catch(()  => {
         errorNotification(`Ops!! Não foi possível buscar este Dragão!`);
