@@ -51,6 +51,7 @@ export const Actions = {
       })
       .catch(() => {
         errorNotification('Ops!! Não foi possível buscar este Dragão!');
+        history.push('/');
         Actions.setError(dispatch);
       });
   },
