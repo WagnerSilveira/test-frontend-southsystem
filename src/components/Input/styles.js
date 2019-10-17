@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const Container = styled.label`
     position: relative;
@@ -6,7 +6,7 @@ export const Container = styled.label`
     width: 100%;
     max-width: 400px;
     margin-bottom: 20px;
-`
+`;
 
 export const Label = styled.span`
     position: absolute;
@@ -17,7 +17,8 @@ export const Label = styled.span`
     font-weight: 500;
     transform-origin: 0 0;
     transition: all 0.2s ease;
-`
+`;
+
 export const Border = styled.span`
     position: absolute;
     bottom: 0;
@@ -28,8 +29,8 @@ export const Border = styled.span`
     transform: scaleX(0);
     transform-origin: 0 0;
     transition: all .15s ease;
-    
-`
+`;
+
 export const InputStyle = styled.input`
     width: fill-available;
     border: 0;
@@ -60,4 +61,4 @@ export const InputStyle = styled.input`
         color: ${(props) => props.theme.secondaryColor};
         transform: translateY(-26px) scale(0.75);
     };
-`
+`;

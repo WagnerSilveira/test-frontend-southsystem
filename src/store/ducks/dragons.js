@@ -1,95 +1,87 @@
 import axios from 'axios';
-import history from "../../helpers/history";
-import { 
-  successNotification, 
-  errorNotification
+import history from '../../helpers/history';
+import {
+  successNotification,
+  errorNotification,
 } from '../../helpers/notification';
 /** Types */
 export const Types = {
-    GET_ALL: "@dragons/GET_ALL",
-    GET: "@dragons/GET",
-    DELETE: "@dragons/DELETE",
-    ERROR: "@dragons/ERROR",
-    DELETE_ERROR: "@dragons/DELETE_ERROR",
-    LOADING: "@dragons/LOADING",
-}
+  GET_ALL: '@dragons/GET_ALL',
+  GET: '@dragons/GET',
+  DELETE: '@dragons/DELETE',
+  ERROR: '@dragons/ERROR',
+  DELETE_ERROR: '@dragons/DELETE_ERROR',
+  LOADING: '@dragons/LOADING',
+};
 /** Actions */
 const baseURL = process.env.URL_API;
 export const Actions = {
 
-  getDragons: () => {
-      return (dispatch) => {
-        dispatch({ type: Types.LOADING });
-        axios.get(`${baseURL}/dragon`)
-        .then(function (response) {
-          dispatch({ type: Types.GET_ALL, value: response.data });
-        })
-        .catch(function (error) {
-          console.error(error)
-          dispatch({ type: Types.ERROR});
-        })      
-      }
-   
+  getDragons: () => (dispatch) => {
+    dispatch({ type: Types.LOADING });
+    axios.get(`${baseURL}/dragon`)
+      .then((response) => {
+        dispatch({ type: Types.GET_ALL, value: response.data });
+      })
+      .catch(() => {
+        dispatch({ type: Types.ERROR });
+      });
   },
 
-  getDragon: (id) => {
-    return (dispatch) => {
-      dispatch({ type: Types.LOADING });
-      axios.get(`${baseURL}/dragon/${id}`)
-        .then(function (response) {
-          dispatch({ type: Types.GET, value: response.data });
-        })
-      .catch(function () {
-        errorNotification(`Ops!! Não foi possível buscar este Dragão!`);
-        dispatch({ type: Types.ERROR});
+  getDragon: (id) => (dispatch) => {
+    dispatch({ type: Types.LOADING });
+    axios.get(`${baseURL}/dragon/${id}`)
+      .then((response) => {
+        dispatch({ type: Types.GET, value: response.data });
+      })
+      .catch(() => {
+        errorNotification('Ops!! Não foi possível buscar este Dragão!');
+        dispatch({ type: Types.ERROR });
       });
-    }
   },
   addDragon: (name, type) => {
     const payload = { name, type };
     return (dispatch) => {
       dispatch({ type: Types.LOADING });
       axios.post(`${baseURL}/dragon`, payload)
-      .then(() => {
-        successNotification('Dragão inserido com sucesso !')
-        history.push('/');
-      })
-      .catch(()  => {
-        errorNotification(`Ops!! Não foi possível inserir!`);
-        dispatch({ type: Types.ERROR });
-      });
-    }
+        .then(() => {
+          successNotification('Dragão inserido com sucesso !');
+          history.push('/');
+        })
+        .catch(() => {
+          errorNotification('Ops!! Não foi possível inserir!');
+          dispatch({ type: Types.ERROR });
+        });
+    };
   },
   updateDragon: (id, name, type) => {
     const payload = { name, type };
     return (dispatch) => {
       dispatch({ type: Types.LOADING });
       axios.put(`${baseURL}/dragon/${id}`, payload)
-      .then(() => {
-        successNotification('Dragão atualizado !');
-      })
-      .catch(()  => {
-        errorNotification(`Ops!! Não foi possível buscar este Dragão!`);
-        dispatch({ type: Types.ERROR });
-      });
-    }
+        .then(() => {
+          successNotification('Dragão atualizado !');
+        })
+        .catch(() => {
+          errorNotification('Ops!! Não foi possível buscar este Dragão!');
+          dispatch({ type: Types.ERROR });
+        });
+    };
   },
 
-  deleteDragon: (id) => {
-    return (dispatch) => {
-      dispatch({ type: Types.LOADING });
-      axios.delete(`${baseURL}/dragon/${id}`)
-        .then(function () {
-          successNotification(`Dragão removido!`);
-          dispatch({ type: Types.DELETE });
-        })
-      .catch(function (error) {
-        errorNotification(`Ops!! Não foi possível remover!`);
-        dispatch({ type: Types.DELETE_ERROR});
+  deleteDragon: (id) => (dispatch) => {
+    dispatch({ type: Types.LOADING });
+    axios.delete(`${baseURL}/dragon/${id}`)
+      .then(() => {
+        successNotification('Dragão removido!');
+        dispatch({ type: Types.DELETE });
+      })
+      .catch(() => {
+        errorNotification('Ops!! Não foi possível remover!');
+        dispatch({ type: Types.DELETE_ERROR });
       });
-    }
-  }
-}
+  },
+};
 
 
 /** Reducer */
@@ -100,36 +92,35 @@ export const INITIAL_STATE = {
   isLoading: false,
   error: false,
 };
-export default function dragons(state = INITIAL_STATE, action){
+export default function dragons(state = INITIAL_STATE, action) {
   switch (action.type) {
     case Types.LOADING:
-        return { 
-          ...state,
-          isLoading: !state.loading, 
-          deleted: false,
-          deleteError: false
-        };  
+      return {
+        ...state,
+        isLoading: !state.loading,
+        deleted: false,
+        deleteError: false,
+      };
     case Types.GET_ALL:
-      return { ...state, list: action.value, error: false  };  
+      return { ...state, list: action.value, error: false };
     case Types.GET:
-      return { ...state, detail: action.value, error: false }; 
+      return { ...state, detail: action.value, error: false };
     case Types.DELETE:
       return {
-         ...state,
-        detail: {}, 
-        deleted: true, 
-        deleteError: false 
-      }; 
+        ...state,
+        detail: {},
+        deleted: true,
+        deleteError: false,
+      };
     case Types.DELETE_ERROR:
-      return { 
+      return {
         ...state,
         deleted: false,
-        deleteError: true
-      }; 
+        deleteError: true,
+      };
     case Types.ERROR:
-          return { ...state, error: true };
+      return { ...state, error: true };
     default:
       return state;
   }
 }
-

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {ButtonStyle} from '../../components/Button/styles';
+import { ButtonStyle } from '../../components/Button/styles';
 
 export const TitleContainer = styled.div`
     display: flex;
@@ -8,11 +8,11 @@ export const TitleContainer = styled.div`
     justify-content: space-between;
     border-bottom: 2px solid white;
     align-items: center;
-`
+`;
 export const Title = styled.h1`
     color: white;
     font-size: 1.5em;
-`
+`;
 export const ButtonNew = styled(ButtonStyle)`
     width: auto;
-` 
+`;

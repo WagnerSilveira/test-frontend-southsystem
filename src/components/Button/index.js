@@ -1,32 +1,43 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { 
-  Container, 
-  ButtonStyle as ButtonDefault, 
-  ButtonDanger
+import {
+  Container,
+  ButtonStyle as ButtonDefault,
+  ButtonDanger,
 } from './styles';
 
-const Button = ({ children, ...props }) => {
+const Button = ({
+  children,
+  danger,
+  onClick,
+  type,
+}) => {
   let ButtonType = ButtonDefault;
-  if(props.danger) {
+
+  if (danger) {
     ButtonType = ButtonDanger;
   }
   return (
-      <Container>
-        <ButtonType {...props}>{children}</ButtonType>
-      </Container>
-    )
+    <Container>
+      <ButtonType onClick={onClick} type={type}>
+        {children}
+      </ButtonType>
+    </Container>
+  );
 };
 
 Button.defaultProps = {
-    type: 'submit',
+  type: 'submit',
+  danger: false,
 };
 Button.propTypes = {
+  danger: PropTypes.bool,
+  onClick: PropTypes.func.isRequired,
   type: PropTypes.string,
   children: PropTypes.oneOfType([
-      PropTypes.any
-    ]).isRequired,
+    PropTypes.any,
+  ]).isRequired,
 };
 
 export default Button;

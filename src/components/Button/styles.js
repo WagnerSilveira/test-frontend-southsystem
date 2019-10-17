@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
     width: 100%;
 `;
-export const ButtonStyle =  styled.button`
+export const ButtonStyle = styled.button`
   background: ${(props) => props.theme.secondaryColor};
   border-radius: 3px;
   border: 2px solid white;
@@ -23,11 +23,12 @@ export const ButtonStyle =  styled.button`
     color: ${(props) => props.theme.secondaryColor};
     border-color: ${(props) => props.theme.secondaryColor};
   }
-`
+`;
+
 export const ButtonDanger = styled(ButtonStyle)`
   color: #d40f0f;
   border-color: #d40f0f;
   &:hover  {
     background-color: #d40f0f;
   }
-`
+`;

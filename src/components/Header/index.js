@@ -1,31 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import logo from '../../images/logo.png'
-import { 
+import logo from '../../assets/images/logo.png';
+import {
   HeaderStyle,
   HeaderLogo,
   HeaderUserInfoContainer,
-  HeaderLogout
+  HeaderLogout,
 } from './styles';
 
-const Header = ({ children, ...props }) => (
-  <HeaderStyle {...props}>
-    <HeaderLogo src={`${logo}`}/>
+const Header = ({
+  username,
+  logout,
+}) => (
+  <HeaderStyle>
+    <HeaderLogo src={`${logo}`} />
     <HeaderUserInfoContainer>
-        <span>Olá {props.username}</span>
-        <HeaderLogout onClick={props.logout}>Sair</HeaderLogout>
+      <span>
+          Olá
+        {' '}
+        { username }
+      </span>
+      <HeaderLogout onClick={logout}>Sair</HeaderLogout>
     </HeaderUserInfoContainer>
-    {children}
   </HeaderStyle>
 );
 
 Header.propTypes = {
-   username: PropTypes.string.isRequired,
-   logout: PropTypes.func.isRequired,
-  children: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.element
-    ]),
+  username: PropTypes.string.isRequired,
+  logout: PropTypes.func.isRequired,
 };
 
 export default Header;
