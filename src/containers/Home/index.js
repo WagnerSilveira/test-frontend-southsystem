@@ -11,7 +11,7 @@ import { Actions as DragonActions } from '../../store/ducks/dragons';
 
 const Home = ({
   getDragons,
-  dragons: { list, loading },
+  dragons: { list, isLoading },
 }) => {
   const history = useHistory();
   useEffect(() => { getDragons(); }, []);
@@ -24,14 +24,14 @@ const Home = ({
         <Title> Lista de Dragões </Title>
         <ButtonNew onClick={goToNew}>  Novo </ButtonNew>
       </TitleContainer>
-      <DragonList list={list} loading={loading} />
+      <DragonList list={list} loading={isLoading} />
     </>
   );
 };
 Home.defaultProps = {
   dragons: {
     list: [],
-    loading: false,
+    isLoading: false,
   },
 };
 
@@ -39,7 +39,7 @@ Home.propTypes = {
   getDragons: PropTypes.func.isRequired,
   dragons: PropTypes.shape({
     list: PropTypes.array,
-    loading: PropTypes.bool,
+    isLoading: PropTypes.bool,
   }),
 };
 

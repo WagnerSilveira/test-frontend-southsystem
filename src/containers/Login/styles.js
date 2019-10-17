@@ -9,7 +9,8 @@ export const Logo = styled.div`
     background-position: center;
     background-repeat: no-repeat;
     filter: invert(100%);
-` 
+`;
+
 export const Container = styled.div`
     position: absolute;
     display: flex;

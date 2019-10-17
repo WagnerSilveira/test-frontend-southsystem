@@ -6,6 +6,7 @@ import { Actions as DragonActions } from '../../store/ducks/dragons';
 import Form, { FormContainer } from '../../components/Form';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
+
 import { PageTitle, BackLink } from './style';
 
 import Header from '../Header';
@@ -32,7 +33,10 @@ const dragonTypeInput = (value = '', change) => ({
 
 const Dragon = ({
   match,
-  dragons,
+  dragons: {
+    detail: dragon,
+    isLoading,
+  },
   getDragon,
   addDragon,
   updateDragon,
@@ -52,16 +56,11 @@ const Dragon = ({
       setEditionMode(true);
     }
     if (isEditionMode) {
-      setName(dragons.detail.name);
-      setType(dragons.detail.type);
+      setName(dragon.name);
+      setType(dragon.type);
     }
-  }, [dragons.detail]);
+  }, [dragon]);
 
-  useEffect(() => {
-    if (dragons.deleted) {
-      history.push('/');
-    }
-  }, [dragons.deleted]);
 
   const saveDragon = () => {
     if (dragonId) {
@@ -78,12 +77,12 @@ const Dragon = ({
           <BackLink onClick={() => { history.push('/'); }}>&lt;- Voltar</BackLink>
           <PageTitle>
             { isEditionMode
-              ? `Editando Dragão ID: ${dragonId}`
+              ? `Editando Dragão ${dragon.name}`
               : 'Criar novo Dragão' }
           </PageTitle>
           <Input {...dragonNameInput(name, genericSetter(setName))} />
           <Input {...dragonTypeInput(type, genericSetter(setType))} />
-          <Button onClick={saveDragon}>
+          <Button onClick={saveDragon} disabled={isLoading}>
             {' '}
             { isEditionMode ? 'Editar' : 'Criar' }
             {' '}
@@ -91,6 +90,7 @@ const Dragon = ({
           {isEditionMode
             ? (
               <Button
+                disabled={isLoading}
                 danger
                 onClick={() => {
                   deleteDragon(dragonId);
@@ -109,6 +109,7 @@ Dragon.defaultProps = {
   dragons: {
     detail: {},
     deleted: false,
+    isLoading: false,
   },
 };
 
@@ -119,6 +120,7 @@ Dragon.propTypes = {
   dragons: PropTypes.shape({
     detail: PropTypes.object,
     deleted: PropTypes.bool,
+    isLoading: PropTypes.bool,
   }),
   getDragon: PropTypes.func.isRequired,
   addDragon: PropTypes.func.isRequired,

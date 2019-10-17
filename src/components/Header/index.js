@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import logo from '../../assets/images/logo.png';
 import {
   HeaderStyle,
+  HeaderAnchor,
   HeaderLogo,
   HeaderUserInfoContainer,
   HeaderLogout,
@@ -13,7 +14,9 @@ const Header = ({
   logout,
 }) => (
   <HeaderStyle>
-    <HeaderLogo src={`${logo}`} />
+    <HeaderAnchor href="/">
+      <HeaderLogo src={`${logo}`} />
+    </HeaderAnchor>
     <HeaderUserInfoContainer>
       <span>
           Olá

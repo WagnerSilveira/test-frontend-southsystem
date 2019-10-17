@@ -11,74 +11,96 @@ export const Types = {
   DELETE: '@dragons/DELETE',
   ERROR: '@dragons/ERROR',
   DELETE_ERROR: '@dragons/DELETE_ERROR',
-  LOADING: '@dragons/LOADING',
+  TOOGLE_LOADING: '@dragons/TOOGLE_LOADING',
 };
 /** Actions */
 const baseURL = process.env.URL_API;
 export const Actions = {
+  toogleLoading: (dispatch) => {
+    dispatch({ type: Types.TOOGLE_LOADING });
+  },
+  setError: (dispatch) => {
+    dispatch({ type: Types.ERROR });
+  },
+  setGet: (dispatch, response) => {
+    dispatch({ type: Types.GET, value: response.data });
+  },
+  setGetAll: (dispatch, response) => {
+    dispatch({ type: Types.GET_ALL, value: response.data });
+  },
 
   getDragons: () => (dispatch) => {
-    dispatch({ type: Types.LOADING });
+    Actions.toogleLoading(dispatch);
     axios.get(`${baseURL}/dragon`)
       .then((response) => {
-        dispatch({ type: Types.GET_ALL, value: response.data });
+        Actions.toogleLoading(dispatch);
+        Actions.setGetAll(dispatch, response);
       })
       .catch(() => {
-        dispatch({ type: Types.ERROR });
+        Actions.toogleLoading(dispatch);
+        Actions.setError(dispatch);
       });
   },
 
   getDragon: (id) => (dispatch) => {
-    dispatch({ type: Types.LOADING });
+    Actions.toogleLoading(dispatch);
     axios.get(`${baseURL}/dragon/${id}`)
       .then((response) => {
-        dispatch({ type: Types.GET, value: response.data });
+        Actions.toogleLoading(dispatch);
+        Actions.setGet(dispatch, response);
       })
       .catch(() => {
         errorNotification('Ops!! Não foi possível buscar este Dragão!');
-        dispatch({ type: Types.ERROR });
+        Actions.setError(dispatch);
       });
   },
   addDragon: (name, type) => {
     const payload = { name, type };
     return (dispatch) => {
-      dispatch({ type: Types.LOADING });
+      Actions.toogleLoading(dispatch);
       axios.post(`${baseURL}/dragon`, payload)
         .then(() => {
+          Actions.toogleLoading(dispatch);
           successNotification('Dragão inserido com sucesso !');
           history.push('/');
         })
         .catch(() => {
+          Actions.toogleLoading(dispatch);
           errorNotification('Ops!! Não foi possível inserir!');
-          dispatch({ type: Types.ERROR });
+          Actions.setError(dispatch);
         });
     };
   },
   updateDragon: (id, name, type) => {
     const payload = { name, type };
     return (dispatch) => {
-      dispatch({ type: Types.LOADING });
+      Actions.toogleLoading(dispatch);
       axios.put(`${baseURL}/dragon/${id}`, payload)
-        .then(() => {
+        .then((response) => {
+          Actions.toogleLoading(dispatch);
+          Actions.setGet(dispatch, response);
           successNotification('Dragão atualizado !');
         })
         .catch(() => {
           errorNotification('Ops!! Não foi possível buscar este Dragão!');
-          dispatch({ type: Types.ERROR });
+          Actions.toogleLoading(dispatch);
+          Actions.setError(dispatch);
         });
     };
   },
 
   deleteDragon: (id) => (dispatch) => {
-    dispatch({ type: Types.LOADING });
+    Actions.toogleLoading(dispatch);
     axios.delete(`${baseURL}/dragon/${id}`)
       .then(() => {
         successNotification('Dragão removido!');
-        dispatch({ type: Types.DELETE });
+        Actions.toogleLoading(dispatch);
+        history.push('/');
       })
       .catch(() => {
         errorNotification('Ops!! Não foi possível remover!');
-        dispatch({ type: Types.DELETE_ERROR });
+        Actions.toogleLoading(dispatch);
+        Actions.setError(dispatch);
       });
   },
 };
@@ -90,21 +112,18 @@ export const INITIAL_STATE = {
   list: [],
   detail: {},
   isLoading: false,
-  error: false,
 };
 export default function dragons(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case Types.LOADING:
+    case Types.TOOGLE_LOADING:
       return {
         ...state,
-        isLoading: !state.loading,
-        deleted: false,
-        deleteError: false,
+        isLoading: !state.isLoading,
       };
     case Types.GET_ALL:
-      return { ...state, list: action.value, error: false };
+      return { ...state, list: action.value, detail: {} };
     case Types.GET:
-      return { ...state, detail: action.value, error: false };
+      return { ...state, list: [], detail: action.value };
     case Types.DELETE:
       return {
         ...state,

@@ -11,7 +11,6 @@ const Form = ({ children, ...props }) => (
 Form.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   children: PropTypes.oneOfType([PropTypes.any]).isRequired,
-
 };
 
 export const FormContainer = ({ children }) => (

@@ -13,6 +13,8 @@ export const HeaderLogo = styled.img`
     width: 50px;
     margin: 0 10px;
 `;
+export const HeaderAnchor = styled.a`
+`;
 export const HeaderUserInfoContainer = styled.div`
     display: flex;
     flex-direction: column;

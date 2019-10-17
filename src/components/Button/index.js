@@ -12,15 +12,21 @@ const Button = ({
   danger,
   onClick,
   type,
+  disabled,
 }) => {
   let ButtonType = ButtonDefault;
 
   if (danger) {
     ButtonType = ButtonDanger;
   }
+
   return (
     <Container>
-      <ButtonType onClick={onClick} type={type}>
+      <ButtonType
+        onClick={disabled ? () => {} : onClick}
+        type={type}
+        disabled={disabled}
+      >
         {children}
       </ButtonType>
     </Container>
@@ -30,9 +36,11 @@ const Button = ({
 Button.defaultProps = {
   type: 'submit',
   danger: false,
+  disabled: false,
 };
 Button.propTypes = {
   danger: PropTypes.bool,
+  disabled: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
   type: PropTypes.string,
   children: PropTypes.oneOfType([

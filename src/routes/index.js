@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import PropType from 'prop-types';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { isAuthenticated } from '../helpers/authentication';
-
+import Loader from '../components/Loader';
 
 const getViewLazy = (view) => lazy(() => import(`../containers/${view}`));
 
@@ -25,7 +25,7 @@ PrivateRoute.propTypes = {
 
 const Routes = () => (
   <Switch>
-    <Suspense fallback={<div> Carregando...</div>}>
+    <Suspense fallback={<Loader />}>
       <PrivateRoute exact path="/" component={getViewLazy('Home')} />
       <PrivateRoute exact path="/dragon/:id" component={getViewLazy('Dragon')} />
       <PrivateRoute exact path="/new" component={getViewLazy('Dragon')} />

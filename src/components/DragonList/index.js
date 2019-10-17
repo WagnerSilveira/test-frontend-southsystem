@@ -14,9 +14,6 @@ import {
 const DragonList = ({ list, loading }) => {
   const history = useHistory();
 
-  if (loading) {
-    return <div> loading ...</div>;
-  }
   return (
     <GridContainer>
       {list && list.sort(sort)
