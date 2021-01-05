@@ -19,7 +19,7 @@
   "author": "Wagner Silveira <wagnerhsilveira@gmail.com>",
   "license": "None",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "dotenv": "^8.1.0",
     "dotenv-webpack": "^1.7.0",
     "history": "^4.10.1",
